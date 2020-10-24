@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/OyvindSabo/sharp-router/issues"
   },
-  "homepage": "https://github.com/OyvindSabo/sharp-router#readme"
+  "homepage": "https://github.com/OyvindSabo/sharp-router#readme",
+  "devDependencies": {
+    "typescript": "^4.0.3"
+  }
 }
