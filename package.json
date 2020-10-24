@@ -1,0 +1,20 @@
+{
+  "name": "sharp-router",
+  "version": "1.0.0",
+  "description": "An easy to use hash-based client-side router",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OyvindSabo/sharp-router.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OyvindSabo/sharp-router/issues"
+  },
+  "homepage": "https://github.com/OyvindSabo/sharp-router#readme"
+}
