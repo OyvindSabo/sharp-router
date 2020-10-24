@@ -21,7 +21,7 @@ class SharpRouter {
       this._callChangeListeners();
     });
   }
-  
+
   _setParams = (params: Params) => {
     this.params = params;
   };
@@ -33,18 +33,14 @@ class SharpRouter {
   _setCurrentTitle = (title: Title) => {
     this.currentTitle = title;
   };
-  
+
   _removeHash = () => {
     return history.replaceState(null, document.title, ' ');
   };
-  
+
   _syncWithHash = () => {
     const { hash } = location;
-    const {
-      route,
-      params,
-      reconstructedHash,
-    } = getRouteAndParamsFromHash(hash, this._routes);
+    const { route, params, reconstructedHash } = getRouteAndParamsFromHash(hash, this._routes);
     this._setParams(params);
     this._setCurrentRoute(this._routes[route]);
     this._setCurrentTitle(this._titles[route]);
@@ -55,7 +51,7 @@ class SharpRouter {
     }
     document.title = this.currentTitle;
   };
-  
+
   setRoutes = (routes: Record<Route, Title>) => {
     Object.entries(routes).forEach(([route, title]) => {
       this._routes[route] = route;
@@ -77,10 +73,10 @@ class SharpRouter {
 
   _callChangeListeners = () => {
     this._changeListeners.forEach((changeListener) => {
-      changeListener({ params: this.params, currentRoute: this.currentRoute })
+      changeListener({ params: this.params, currentRoute: this.currentRoute });
     });
   };
-  
+
   addChangeListener = (onChange: Callback) => {
     this._changeListeners.push(onChange);
     // TODO: Consider rather only calling the new listener
