@@ -50,14 +50,14 @@ const getMatch = (hash: Hash, route: Route) => {
   const params: Params = {};
   let reconstructedHash = '#';
   if (hashTokens.length !== routeTokens.length) return false;
-  for (let i of Object.keys(hashTokens)) {
+  for (const i of Object.keys(hashTokens)) {
     const hashToken = hashTokens[Number(i)];
     const routeToken = routeTokens[Number(i)];
     if (isParameterRouteToken(routeToken)) {
       const { parameter, type } = parseParameterRouteToken(routeToken);
       if (type === 'int') {
         if (!isInt(hashToken)) return false;
-        params[parameter] = parseInt(hashToken);
+        params[parameter] = parseInt(hashToken, 10);
         reconstructedHash = appendTokenToHash(reconstructedHash, hashToken);
       } else if (type === 'number') {
         if (!isNumber(hashToken)) return false;
