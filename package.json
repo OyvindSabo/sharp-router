@@ -2,19 +2,30 @@
   "name": "sharp-router",
   "version": "1.0.0",
   "description": "An easy to use hash-based client-side router",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
-    "test": "jest --config jestconfig.json"
+    "test": "jest --config jestconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OyvindSabo/sharp-router.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "sharp",
+    "hash",
+    "hashtag",
+    "router"
+  ],
+  "author": "Øyvind Sæbø",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/OyvindSabo/sharp-router/issues"
