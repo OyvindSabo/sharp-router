@@ -5,6 +5,7 @@ class SharpRouter {
   params: Params;
   currentRoute: Route;
   currentTitle: Title;
+  // TODO: Consider if this could rather be Route[]
   _routes: Record<Route, Route>;
   _titles: Record<Route, Title>;
   _changeListeners: Callback[];
@@ -40,7 +41,10 @@ class SharpRouter {
 
   _syncWithHash = () => {
     const { hash } = location;
-    const { route, params, reconstructedHash } = getRouteAndParamsFromHash(hash, this._routes);
+    const { route, params, reconstructedHash } = getRouteAndParamsFromHash(
+      hash,
+      Object.keys(this._routes),
+    );
     this._setParams(params);
     this._setCurrentRoute(this._routes[route]);
     this._setCurrentTitle(this._titles[route]);
