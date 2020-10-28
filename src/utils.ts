@@ -1,4 +1,4 @@
-import type { Hash, Params, Route, Title, Token } from './types';
+import type { Callback, Hash, Params, Route, Title, Token } from './types';
 
 const getTokens = (hash: Hash) =>
   hash
@@ -84,4 +84,20 @@ export const getRouteAndParamsFromHash = (hash: Hash, routes: Route[]) => {
     }
   }
   return { route: '', params: {}, reconstructedHash: '' };
+};
+
+export const withChangeListener = (
+  changeListeners: Callback[],
+  changeListenerToBeAdded: Callback,
+) => {
+  return [...changeListeners, changeListenerToBeAdded];
+};
+
+export const withoutChangeListener = (
+  changeListeners: Callback[],
+  changeListenerToBeRemoved: Callback,
+) => {
+  return changeListeners.filter(
+    (changeListener) => changeListener !== changeListenerToBeRemoved,
+  );
 };

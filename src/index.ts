@@ -1,5 +1,9 @@
 import type { Params, Route, Title, Callback } from './types';
-import { getRouteAndParamsFromHash } from './utils';
+import {
+  getRouteAndParamsFromHash,
+  withChangeListener,
+  withoutChangeListener,
+} from './utils';
 
 class SharpRouter {
   params: Params;
@@ -81,11 +85,18 @@ class SharpRouter {
     });
   };
 
-  addChangeListener = (onChange: Callback) => {
-    this._changeListeners.push(onChange);
-    // TODO: Consider rather only calling the new listener
-    // TODO: Consider if any listeners should be called at all
-    this._callChangeListeners();
+  addChangeListener = (changeListenerToBeAdded: Callback) => {
+    this._changeListeners = withChangeListener(
+      this._changeListeners,
+      changeListenerToBeAdded,
+    );
+  };
+
+  removeChangeListener = (changeListenerToBeRemoved: Callback) => {
+    this._changeListeners = withoutChangeListener(
+      this._changeListeners,
+      changeListenerToBeRemoved,
+    );
   };
 }
 

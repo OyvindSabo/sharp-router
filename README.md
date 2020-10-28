@@ -55,10 +55,14 @@ console.log(router.params); // { username: 'bob' }
 ## Listen to route changes
 
 ```javascript
-router.addChangeListener(({ currentRoute, params }) => {
+const changeListener = ({ currentRoute, params }) => {
   console.log(currentRoute); // '/users/<username:string>'
   console.log(params); // { username: 'bob' }
-});
+};
+
+router.addChangeListener(changeListener);
+
+router.removeChangeListener(changeListener);
 ```
 
 ## Using Sharp Router with React
@@ -79,11 +83,13 @@ const ComponentWithRouting = () => {
   const [params, setParams] = useState({});
 
   useEffect(() => {
-    router.addChangeListener(({ currentRoute, params }) => {
+    const changeListener = ({ currentRoute, params }) => {
       setCurrentRoute(currentRoute);
       setParams(params);
-    });
-  });
+    };
+    router.addChangeListener(changeListener);
+    return () => router.removeChangeListener(changeListener);
+  }, []);
 
   switch (currentRoute) {
     case '/login':

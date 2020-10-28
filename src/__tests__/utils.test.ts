@@ -1,4 +1,8 @@
-import { getRouteAndParamsFromHash } from '../utils';
+import {
+  getRouteAndParamsFromHash,
+  withChangeListener,
+  withoutChangeListener,
+} from '../utils';
 
 test('Test static routing happy path', () => {
   expect(
@@ -169,4 +173,53 @@ test('Test extracting integer and number parameters from routes', () => {
     params: { r: 0, g: 0, b: 255, a: 0.3 },
     reconstructedHash: '#/rgb/0/0/255/0.3',
   });
+});
+
+test('Test that adding event listenerer and then removing it', () => {
+  const voidFunction = () => {};
+  expect(
+    withoutChangeListener(withChangeListener([], voidFunction), voidFunction),
+  ).toStrictEqual([]);
+});
+
+test('Test adding and removing event listeners', () => {
+  const changeListener1 = () => {};
+  const changeListener2 = () => {};
+  const changeListener3 = () => {};
+
+  // Start with no event listeners, then add three
+  expect(
+    withChangeListener(
+      withChangeListener(
+        withChangeListener([], changeListener1),
+        changeListener2,
+      ),
+      changeListener3,
+    ),
+  ).toStrictEqual([changeListener1, changeListener2, changeListener3]);
+
+  // Start with three event listeners, then remove three
+  expect(
+    withoutChangeListener(
+      withoutChangeListener(
+        withoutChangeListener(
+          [changeListener1, changeListener2, changeListener3],
+          changeListener1,
+        ),
+        changeListener2,
+      ),
+      changeListener3,
+    ),
+  ).toStrictEqual([]);
+
+  // Start with no event listeners, then try to remove three
+  expect(
+    withoutChangeListener(
+      withoutChangeListener(
+        withoutChangeListener([], changeListener1),
+        changeListener2,
+      ),
+      changeListener3,
+    ),
+  ).toStrictEqual([]);
 });
