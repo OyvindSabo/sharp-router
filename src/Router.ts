@@ -7,7 +7,7 @@ import {
 
 class Router {
   params: Params;
-  currentRoute: Route;
+  matchedRoute: Route;
   currentTitle: Title;
   // TODO: Consider if this could rather be Route[]
   _routes: Record<Route, Route>;
@@ -15,7 +15,7 @@ class Router {
   _changeListeners: ChangeListener[];
   constructor(routes: Record<Route, Title>) {
     this.params = {};
-    this.currentRoute = '';
+    this.matchedRoute = '';
     this.currentTitle = '';
     this._routes = {};
     this._titles = {};
@@ -31,8 +31,8 @@ class Router {
     this.params = params;
   };
 
-  _setCurrentRoute = (route: Route) => {
-    this.currentRoute = route;
+  _setMatchedRoute = (route: Route) => {
+    this.matchedRoute = route;
   };
 
   _setCurrentTitle = (title: Title) => {
@@ -50,7 +50,7 @@ class Router {
       Object.keys(this._routes),
     );
     this._setParams(params);
-    this._setCurrentRoute(this._routes[route]);
+    this._setMatchedRoute(this._routes[route]);
     this._setCurrentTitle(this._titles[route]);
     if (reconstructedHash === '#') {
       this._removeHash();
@@ -81,7 +81,7 @@ class Router {
 
   _callChangeListeners = () => {
     this._changeListeners.forEach((changeListener) => {
-      changeListener({ params: this.params, currentRoute: this.currentRoute });
+      changeListener({ params: this.params, matchedRoute: this.matchedRoute });
     });
   };
 

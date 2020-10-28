@@ -3,17 +3,17 @@ import { useEffect, useState } from 'react';
 import { ChangeListener } from './types';
 
 export const useRouter = (router: Router) => {
-  const [currentRoute, setCurrentRoute] = useState(router.currentRoute);
+  const [matchedRoute, setMatchedRoute] = useState(router.matchedRoute);
   const [params, setParams] = useState(router.params);
 
   useEffect(() => {
-    const changeListener: ChangeListener = ({ currentRoute, params }) => {
-      setCurrentRoute(currentRoute);
+    const changeListener: ChangeListener = ({ matchedRoute, params }) => {
+      setMatchedRoute(matchedRoute);
       setParams(params);
     };
     router.addChangeListener(changeListener);
     return () => router.removeChangeListener(changeListener);
   }, []);
 
-  return { currentRoute, params };
+  return { matchedRoute, params };
 };

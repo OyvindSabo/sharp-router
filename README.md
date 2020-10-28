@@ -48,15 +48,15 @@ location.hash = '#/users/bob';
 ## Access the matched route, as well as its parameters
 
 ```javascript
-console.log(router.currentRoute); // '/users/<username:string>'
+console.log(router.matchedRoute); // '/users/<username:string>'
 console.log(router.params); // { username: 'bob' }
 ```
 
 ## Listen to route changes
 
 ```javascript
-const changeListener = ({ currentRoute, params }) => {
-  console.log(currentRoute); // '/users/<username:string>'
+const changeListener = ({ matchedRoute, params }) => {
+  console.log(matchedRoute); // '/users/<username:string>'
   console.log(params); // { username: 'bob' }
 };
 
@@ -79,8 +79,8 @@ const router = new Router({
 });
 
 const ComponentWithRouting = () => {
-  const { currentRoute, params } = useRouter(router);
-  switch (currentRoute) {
+  const { matchedRoute, params } = useRouter(router);
+  switch (matchedRoute) {
     case '/login':
       return <div>Login</div>;
     case '/register':

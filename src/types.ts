@@ -11,8 +11,8 @@ export type Title = string;
 export type Token = string;
 export type ChangeListener = ({
   params,
-  currentRoute,
+  matchedRoute,
 }: {
   params: Params;
-  currentRoute: Route;
+  matchedRoute: Route;
 }) => void;
