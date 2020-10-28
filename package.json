@@ -26,7 +26,7 @@
     "router"
   ],
   "author": "Øyvind Sæbø",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/OyvindSabo/sharp-router/issues"
   },
