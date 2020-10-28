@@ -70,6 +70,7 @@ router.removeChangeListener(changeListener);
 ```javascript
 import React, { useEffect, useState } from 'react';
 import Router from 'sharp-router';
+import { useRouter } from 'sharp-router/react';
 
 const router = new Router({
   '/': 'Home',
@@ -79,18 +80,7 @@ const router = new Router({
 });
 
 const ComponentWithRouting = () => {
-  const [currentRoute, setCurrentRoute] = useState('');
-  const [params, setParams] = useState({});
-
-  useEffect(() => {
-    const changeListener = ({ currentRoute, params }) => {
-      setCurrentRoute(currentRoute);
-      setParams(params);
-    };
-    router.addChangeListener(changeListener);
-    return () => router.removeChangeListener(changeListener);
-  }, []);
-
+  const { currentRoute, params } = useRouter(router);
   switch (currentRoute) {
     case '/login':
       return <div>Login</div>;

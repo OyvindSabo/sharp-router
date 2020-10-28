@@ -1,18 +1,18 @@
-import type { Params, Route, Title, Callback } from './types';
+import type { Params, Route, Title, ChangeListener } from './types';
 import {
   getRouteAndParamsFromHash,
   withChangeListener,
   withoutChangeListener,
 } from './utils';
 
-class SharpRouter {
+class Router {
   params: Params;
   currentRoute: Route;
   currentTitle: Title;
   // TODO: Consider if this could rather be Route[]
   _routes: Record<Route, Route>;
   _titles: Record<Route, Title>;
-  _changeListeners: Callback[];
+  _changeListeners: ChangeListener[];
   constructor(routes: Record<Route, Title>) {
     this.params = {};
     this.currentRoute = '';
@@ -85,14 +85,14 @@ class SharpRouter {
     });
   };
 
-  addChangeListener = (changeListenerToBeAdded: Callback) => {
+  addChangeListener = (changeListenerToBeAdded: ChangeListener) => {
     this._changeListeners = withChangeListener(
       this._changeListeners,
       changeListenerToBeAdded,
     );
   };
 
-  removeChangeListener = (changeListenerToBeRemoved: Callback) => {
+  removeChangeListener = (changeListenerToBeRemoved: ChangeListener) => {
     this._changeListeners = withoutChangeListener(
       this._changeListeners,
       changeListenerToBeRemoved,
@@ -100,4 +100,4 @@ class SharpRouter {
   };
 }
 
-export default SharpRouter;
+export default Router;

@@ -9,7 +9,7 @@ export type Params = Record<string, boolean | number | string>; // TODO: Check t
 export type Route = string;
 export type Title = string;
 export type Token = string;
-export type Callback = ({
+export type ChangeListener = ({
   params,
   currentRoute,
 }: {

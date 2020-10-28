@@ -42,5 +42,9 @@
   },
   "files": [
     "lib/**/*"
-  ]
+  ],
+  "dependencies": {
+    "@types/react": "^16.9.55",
+    "react": "^17.0.1"
+  }
 }
