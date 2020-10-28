@@ -68,7 +68,7 @@ router.removeChangeListener(changeListener);
 ## Using Sharp Router with React
 
 ```javascript
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Router, { useRouter } from 'sharp-router';
 
 const router = new Router({
@@ -80,15 +80,12 @@ const router = new Router({
 
 const ComponentWithRouting = () => {
   const { matchedRoute, params } = useRouter(router);
-  switch (matchedRoute) {
-    case '/login':
-      return <div>Login</div>;
-    case '/register':
-      return <div>Register</div>;
-    case '/users/<username:string>':
-      return <div>{params.username}'s profile</div>;
-    default:
-      return <div>Home</div>;
+
+  if (matchedRoute === '/') return <div>Home</div>;
+  if (matchedRoute === '/login') return <div>Login</div>;
+  if (matchedRoute === '/register') return <div>Register</div>;
+  if (matchedRoute === '/users/<username:string>') {
+    return <div>{params.username}'s profile</div>;
   }
 };
 ```
