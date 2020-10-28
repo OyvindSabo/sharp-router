@@ -69,8 +69,7 @@ router.removeChangeListener(changeListener);
 
 ```javascript
 import React, { useEffect, useState } from 'react';
-import Router from 'sharp-router';
-import { useRouter } from 'sharp-router/react';
+import Router, { useRouter } from 'sharp-router';
 
 const router = new Router({
   '/': 'Home',
