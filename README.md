@@ -57,7 +57,7 @@ console.log(router.params); // { username: 'bob' }
 
 ```javascript
 const changeListener = ({ route, matchedRoute, params }) => {
-  console.log(router.route); // '/users/bob'
+  console.log(route); // '/users/bob'
   console.log(matchedRoute); // '/users/<username:string>'
   console.log(params); // { username: 'bob' }
 };
