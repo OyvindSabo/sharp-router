@@ -8,6 +8,8 @@ export type Params = Record<string, boolean | number | string>; // TODO: Check t
  */
 export type Route = string;
 export type Title = string;
+export type TitleGetter = ((params: Params) => Title) | (() => Title);
+export type ThunkedString = () => string;
 export type Token = string;
 export type ChangeListener = ({
   params,
@@ -16,3 +18,13 @@ export type ChangeListener = ({
   params: Params;
   matchedRoute: Route;
 }) => void;
+
+export type Router = {
+  params: Params;
+  matchedRoute: Route;
+  currentTitle: Title;
+  // TODO: Consider if this could rather be Route[]
+  _routes: Record<Route, Route>;
+  _titleGetters: Record<Route, TitleGetter>;
+  _changeListeners: ChangeListener[];
+};

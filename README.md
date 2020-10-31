@@ -22,7 +22,7 @@ const router = new Router({
   '/': 'Home', // https://example.com
   '/login': 'Login', // https://example.com/#/login
   '/register': 'Register', // https://example.com/#/register
-  '/users/<username:string>': 'Profile', // https://example.com/#/users/bob
+  '/users/<username:string>': ({ username }) => `Profile of ${username}`, // https://example.com/#/users/bob
 });
 ```
 
@@ -75,7 +75,7 @@ const router = new Router({
   '/': 'Home',
   '/login': 'Login',
   '/register': 'Register',
-  '/users/<username:string>': 'Profile',
+  '/users/<username:string>': ({ username }) => `Profile of ${username}`,
 });
 
 const ComponentWithRouting = () => {
@@ -85,7 +85,7 @@ const ComponentWithRouting = () => {
   if (matchedRoute === '/login') return <div>Login</div>;
   if (matchedRoute === '/register') return <div>Register</div>;
   if (matchedRoute === '/users/<username:string>') {
-    return <div>{params.username}'s profile</div>;
+    return <div>Profile of {params.username}</div>;
   }
 };
 ```

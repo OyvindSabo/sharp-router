@@ -1,4 +1,11 @@
-import type { Params, Route, Title, ChangeListener } from './types';
+import { handleSetRoutes } from './reducers';
+import type {
+  Params,
+  Route,
+  Title,
+  TitleGetter,
+  ChangeListener,
+} from './types';
 import {
   getRouteAndParamsFromHash,
   withChangeListener,
@@ -11,14 +18,14 @@ class Router {
   currentTitle: Title;
   // TODO: Consider if this could rather be Route[]
   _routes: Record<Route, Route>;
-  _titles: Record<Route, Title>;
+  _titleGetters: Record<Route, TitleGetter>;
   _changeListeners: ChangeListener[];
-  constructor(routes: Record<Route, Title>) {
+  constructor(routes: Record<Route, Title | TitleGetter>) {
     this.params = {};
     this.matchedRoute = '';
     this.currentTitle = '';
     this._routes = {};
-    this._titles = {};
+    this._titleGetters = {};
     this._changeListeners = [];
     this.setRoutes(routes);
     window.addEventListener('hashchange', () => {
@@ -51,24 +58,22 @@ class Router {
     );
     this._setParams(params);
     this._setMatchedRoute(this._routes[route]);
-    this._setCurrentTitle(this._titles[route]);
+    this._setCurrentTitle(this._titleGetters[route](params));
     if (reconstructedHash === '#') {
       this._removeHash();
+      document.title = this.currentTitle;
     } else {
       history.replaceState(undefined, document.title, reconstructedHash);
     }
-    document.title = this.currentTitle;
   };
 
-  setRoutes = (routes: Record<Route, Title>) => {
-    Object.entries(routes).forEach(([route, title]) => {
-      this._routes[route] = route;
-      this._titles[route] = title;
-      if (route === '/') {
-        this._routes[''] = route;
-        this._titles[''] = title;
-      }
-    });
+  setRoutes = (routes: Record<Route, Title | TitleGetter>) => {
+    const {
+      routes: processedRoutes,
+      titleGetters: processedTitleGetters,
+    } = handleSetRoutes(this, routes);
+    this._routes = processedRoutes;
+    this._titleGetters = processedTitleGetters;
     this._syncWithHash();
   };
 
