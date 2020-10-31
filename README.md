@@ -71,7 +71,7 @@ router.removeChangeListener(changeListener);
 import React from 'react';
 import createRouter, { useRouter } from 'sharp-router';
 
-const router = new Router({
+const router = createRouter({
   '/': 'Home',
   '/login': 'Login',
   '/register': 'Register',
