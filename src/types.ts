@@ -19,12 +19,23 @@ export type ChangeListener = ({
   matchedRoute: Route;
 }) => void;
 
-export type Router = {
+export type RouterState = {
   params: Params;
   matchedRoute: Route;
   currentTitle: Title;
   // TODO: Consider if this could rather be Route[]
-  _routes: Record<Route, Route>;
-  _titleGetters: Record<Route, TitleGetter>;
-  _changeListeners: ChangeListener[];
+  routes: Record<Route, Route>;
+  titleGetters: Record<Route, TitleGetter>;
+  changeListeners: ChangeListener[];
+};
+
+export type Router = {
+  params: Params;
+  matchedRoute: Route;
+  currentTitle: Title;
+  setRoutes: (routes: Record<Route, Title | TitleGetter>) => void;
+  navigateTo: (route: Route) => void;
+  refresh: VoidFunction;
+  addChangeListener: (changeListenerToBeAdded: ChangeListener) => void;
+  removeChangeListener: (changeListenerToBeRemoved: ChangeListener) => void;
 };

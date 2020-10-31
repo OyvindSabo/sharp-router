@@ -1,2 +1,2 @@
 export { useRouter } from './useRouter';
-export { default } from './Router';
+export { default } from './createRouter';

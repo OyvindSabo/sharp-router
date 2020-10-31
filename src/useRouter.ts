@@ -1,6 +1,5 @@
-import Router from '.';
 import { useEffect, useState } from 'react';
-import { ChangeListener } from './types';
+import { ChangeListener, Router } from './types';
 
 export const useRouter = (router: Router) => {
   const [matchedRoute, setMatchedRoute] = useState(router.matchedRoute);

@@ -1,7 +1,7 @@
-import { Route, Router, Title, TitleGetter } from './types';
+import { Route, RouterState, Title, TitleGetter } from './types';
 
 export const handleSetRoutes = (
-  state: Router,
+  state: RouterState,
   routes: Record<Route, Title | TitleGetter>,
 ) => {
   const processedRoutes: Record<Route, Route> = {};
