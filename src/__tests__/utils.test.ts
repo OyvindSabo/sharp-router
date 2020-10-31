@@ -8,7 +8,8 @@ test('Test static routing happy path', () => {
   expect(
     getRouteAndParamsFromHash('#', ['/', '/about', '/users']),
   ).toStrictEqual({
-    route: '/',
+    route: '',
+    routePattern: '/',
     params: {},
     reconstructedHash: '#',
   });
@@ -16,6 +17,7 @@ test('Test static routing happy path', () => {
     getRouteAndParamsFromHash('#/about', ['/', '/about', '/users']),
   ).toStrictEqual({
     route: '/about',
+    routePattern: '/about',
     params: {},
     reconstructedHash: '#/about',
   });
@@ -23,6 +25,7 @@ test('Test static routing happy path', () => {
     getRouteAndParamsFromHash('#/users', ['/', '/about', '/users']),
   ).toStrictEqual({
     route: '/users',
+    routePattern: '/users',
     params: {},
     reconstructedHash: '#/users',
   });
@@ -32,7 +35,8 @@ test('Test recognizing and cleaning routes with a trailing slash', () => {
   expect(
     getRouteAndParamsFromHash('#/', ['/', '/about', '/users']),
   ).toStrictEqual({
-    route: '/',
+    route: '',
+    routePattern: '/',
     params: {},
     reconstructedHash: '#',
   });
@@ -40,6 +44,7 @@ test('Test recognizing and cleaning routes with a trailing slash', () => {
     getRouteAndParamsFromHash('#/about/', ['/', '/about', '/users']),
   ).toStrictEqual({
     route: '/about',
+    routePattern: '/about',
     params: {},
     reconstructedHash: '#/about',
   });
@@ -47,6 +52,7 @@ test('Test recognizing and cleaning routes with a trailing slash', () => {
     getRouteAndParamsFromHash('#/users/', ['/', '/about', '/users']),
   ).toStrictEqual({
     route: '/users',
+    routePattern: '/users',
     params: {},
     reconstructedHash: '#/users',
   });
@@ -61,7 +67,8 @@ test('Test extracting string parameter from routes', () => {
       '/topics/<topicId:string>',
     ]),
   ).toStrictEqual({
-    route: '/',
+    route: '',
+    routePattern: '/',
     params: {},
     reconstructedHash: '#',
   });
@@ -74,6 +81,7 @@ test('Test extracting string parameter from routes', () => {
     ]),
   ).toStrictEqual({
     route: '/about',
+    routePattern: '/about',
     params: {},
     reconstructedHash: '#/about',
   });
@@ -86,6 +94,7 @@ test('Test extracting string parameter from routes', () => {
     ]),
   ).toStrictEqual({
     route: '/topics',
+    routePattern: '/topics',
     params: {},
     reconstructedHash: '#/topics',
   });
@@ -97,7 +106,8 @@ test('Test extracting string parameter from routes', () => {
       '/topics/<topicId:string>',
     ]),
   ).toStrictEqual({
-    route: '/topics/<topicId:string>',
+    route: '/topics/art-and-culture',
+    routePattern: '/topics/<topicId:string>',
     params: { topicId: 'art-and-culture' },
     reconstructedHash: '#/topics/art-and-culture',
   });
@@ -109,7 +119,8 @@ test('Test extracting integer parameters from routes', () => {
       '/rgb/<r:int>/<g:int>/<b:int>',
     ]),
   ).toStrictEqual({
-    route: '/rgb/<r:int>/<g:int>/<b:int>',
+    route: '/rgb/255/0/0',
+    routePattern: '/rgb/<r:int>/<g:int>/<b:int>',
     params: { r: 255, g: 0, b: 0 },
     reconstructedHash: '#/rgb/255/0/0',
   });
@@ -121,7 +132,8 @@ test('Test extracting integer parameters from route', () => {
       '/rgb/<r:int>/<g:int>/<b:int>',
     ]),
   ).toStrictEqual({
-    route: '/rgb/<r:int>/<g:int>/<b:int>',
+    route: '/rgb/255/0/0',
+    routePattern: '/rgb/<r:int>/<g:int>/<b:int>',
     params: { r: 255, g: 0, b: 0 },
     reconstructedHash: '#/rgb/255/0/0',
   });
@@ -130,7 +142,8 @@ test('Test extracting integer parameters from route', () => {
       '/rgb/<r:int>/<g:int>/<b:int>',
     ]),
   ).toStrictEqual({
-    route: '/rgb/<r:int>/<g:int>/<b:int>',
+    route: '/rgb/0/255/0',
+    routePattern: '/rgb/<r:int>/<g:int>/<b:int>',
     params: { r: 0, g: 255, b: 0 },
     reconstructedHash: '#/rgb/0/255/0',
   });
@@ -139,7 +152,8 @@ test('Test extracting integer parameters from route', () => {
       '/rgb/<r:int>/<g:int>/<b:int>',
     ]),
   ).toStrictEqual({
-    route: '/rgb/<r:int>/<g:int>/<b:int>',
+    route: '/rgb/0/0/255',
+    routePattern: '/rgb/<r:int>/<g:int>/<b:int>',
     params: { r: 0, g: 0, b: 255 },
     reconstructedHash: '#/rgb/0/0/255',
   });
@@ -151,7 +165,8 @@ test('Test extracting integer and number parameters from routes', () => {
       '/rgb/<r:int>/<g:int>/<b:int>/<a:number>',
     ]),
   ).toStrictEqual({
-    route: '/rgb/<r:int>/<g:int>/<b:int>/<a:number>',
+    route: '/rgb/255/0/0/0.3',
+    routePattern: '/rgb/<r:int>/<g:int>/<b:int>/<a:number>',
     params: { r: 255, g: 0, b: 0, a: 0.3 },
     reconstructedHash: '#/rgb/255/0/0/0.3',
   });
@@ -160,7 +175,8 @@ test('Test extracting integer and number parameters from routes', () => {
       '/rgb/<r:int>/<g:int>/<b:int>/<a:number>',
     ]),
   ).toStrictEqual({
-    route: '/rgb/<r:int>/<g:int>/<b:int>/<a:number>',
+    route: '/rgb/0/255/0/0.3',
+    routePattern: '/rgb/<r:int>/<g:int>/<b:int>/<a:number>',
     params: { r: 0, g: 255, b: 0, a: 0.3 },
     reconstructedHash: '#/rgb/0/255/0/0.3',
   });
@@ -169,7 +185,8 @@ test('Test extracting integer and number parameters from routes', () => {
       '/rgb/<r:int>/<g:int>/<b:int>/<a:number>',
     ]),
   ).toStrictEqual({
-    route: '/rgb/<r:int>/<g:int>/<b:int>/<a:number>',
+    route: '/rgb/0/0/255/0.3',
+    routePattern: '/rgb/<r:int>/<g:int>/<b:int>/<a:number>',
     params: { r: 0, g: 0, b: 255, a: 0.3 },
     reconstructedHash: '#/rgb/0/0/255/0.3',
   });

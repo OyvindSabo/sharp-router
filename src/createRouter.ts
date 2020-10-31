@@ -16,6 +16,7 @@ import {
 const createRouter = (routes: Record<Route, Title | TitleGetter>) => {
   let state: RouterState = {
     params: {},
+    route: '',
     matchedRoute: '',
     currentTitle: '',
     routes: {},
@@ -25,6 +26,10 @@ const createRouter = (routes: Record<Route, Title | TitleGetter>) => {
 
   const setParams = (params: Params) => {
     state.params = params;
+  };
+
+  const setRoute = (route: Route) => {
+    state.route = route;
   };
 
   const setMatchedRoute = (route: Route) => {
@@ -41,13 +46,16 @@ const createRouter = (routes: Record<Route, Title | TitleGetter>) => {
 
   const syncWithHash = () => {
     const { hash } = location;
-    const { route, params, reconstructedHash } = getRouteAndParamsFromHash(
-      hash,
-      Object.keys(state.routes),
-    );
+    const {
+      route,
+      routePattern,
+      params,
+      reconstructedHash,
+    } = getRouteAndParamsFromHash(hash, Object.keys(state.routes));
     setParams(params);
-    setMatchedRoute(state.routes[route]);
-    setCurrentTitle(state.titleGetters[route](params));
+    setRoute(route);
+    setMatchedRoute(state.routes[routePattern]);
+    setCurrentTitle(state.titleGetters[routePattern](params));
     if (reconstructedHash === '#') {
       removeHash();
     } else {
@@ -59,8 +67,9 @@ const createRouter = (routes: Record<Route, Title | TitleGetter>) => {
   const callChangeListeners = () => {
     state.changeListeners.forEach((changeListener) => {
       changeListener({
-        params: state.params,
+        route: state.route,
         matchedRoute: state.matchedRoute,
+        params: state.params,
       });
     });
   };
@@ -105,6 +114,7 @@ const createRouter = (routes: Record<Route, Title | TitleGetter>) => {
 
   return {
     params: state.params,
+    route: state.route,
     matchedRoute: state.matchedRoute,
     currentTitle: state.currentTitle,
     setRoutes,

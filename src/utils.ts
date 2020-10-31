@@ -75,15 +75,19 @@ const getMatch = (hash: Hash, route: Route) => {
   return { params, reconstructedHash };
 };
 
-export const getRouteAndParamsFromHash = (hash: Hash, routes: Route[]) => {
-  for (const route of routes) {
-    const match = getMatch(hash, route);
+export const getRouteAndParamsFromHash = (
+  hash: Hash,
+  routePatterns: Route[],
+) => {
+  for (const routePattern of routePatterns) {
+    const match = getMatch(hash, routePattern);
     if (match) {
       const { params, reconstructedHash } = match;
-      return { route, params, reconstructedHash };
+      const route = reconstructedHash.substr(1);
+      return { route, routePattern, params, reconstructedHash };
     }
   }
-  return { route: '', params: {}, reconstructedHash: '' };
+  return { route: '', routePattern: '', params: {}, reconstructedHash: '' };
 };
 
 export const withChangeListener = (

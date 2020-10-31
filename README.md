@@ -48,6 +48,7 @@ location.hash = '#/users/bob';
 ## Access the matched route, as well as its parameters
 
 ```javascript
+console.log(router.route); // '/users/bob'
 console.log(router.matchedRoute); // '/users/<username:string>'
 console.log(router.params); // { username: 'bob' }
 ```
@@ -55,13 +56,13 @@ console.log(router.params); // { username: 'bob' }
 ## Listen to route changes
 
 ```javascript
-const changeListener = ({ matchedRoute, params }) => {
+const changeListener = ({ route, matchedRoute, params }) => {
+  console.log(router.route); // '/users/bob'
   console.log(matchedRoute); // '/users/<username:string>'
   console.log(params); // { username: 'bob' }
 };
 
 router.addChangeListener(changeListener);
-
 router.removeChangeListener(changeListener);
 ```
 
@@ -79,14 +80,20 @@ const router = createRouter({
 });
 
 const ComponentWithRouting = () => {
-  const { matchedRoute, params } = useRouter(router);
-
-  if (matchedRoute === '/') return <div>Home</div>;
-  if (matchedRoute === '/login') return <div>Login</div>;
-  if (matchedRoute === '/register') return <div>Register</div>;
-  if (matchedRoute === '/users/<username:string>') {
-    return <div>Profile of {params.username}</div>;
-  }
+  const { route, matchedRoute, params } = useRouter(router);
+  return (
+    <div>
+      <div>
+        route: <pre>{route}</pre>
+      </div>
+      <div>
+        matchedRoute: <pre>{route}</pre>
+      </div>
+      <div>
+        matchedRoute: <pre>{JSON.stringify(params, null, 2)}</pre>
+      </div>
+    </div>
+  );
 };
 ```
 

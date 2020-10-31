@@ -6,11 +6,12 @@ test('Test that titleGetters are all functions, regardless of whether title is d
       handleSetRoutes(
         {
           params: {},
+          route: '',
           matchedRoute: '',
           currentTitle: '',
-          _routes: {},
-          _titleGetters: {},
-          _changeListeners: [],
+          routes: {},
+          titleGetters: {},
+          changeListeners: [],
         },
         {
           '/': 'Home',
@@ -30,11 +31,12 @@ test('Test that titleGetters return the correct title string, regardless of whet
       handleSetRoutes(
         {
           params: {},
+          route: '',
           matchedRoute: '',
           currentTitle: '',
-          _routes: {},
-          _titleGetters: {},
-          _changeListeners: [],
+          routes: {},
+          titleGetters: {},
+          changeListeners: [],
         },
         {
           '/': 'Home',

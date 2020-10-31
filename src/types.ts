@@ -12,15 +12,18 @@ export type TitleGetter = ((params: Params) => Title) | (() => Title);
 export type ThunkedString = () => string;
 export type Token = string;
 export type ChangeListener = ({
+  route,
   params,
   matchedRoute,
 }: {
+  route: Route;
   params: Params;
   matchedRoute: Route;
 }) => void;
 
 export type RouterState = {
   params: Params;
+  route: Route;
   matchedRoute: Route;
   currentTitle: Title;
   // TODO: Consider if this could rather be Route[]
@@ -31,6 +34,7 @@ export type RouterState = {
 
 export type Router = {
   params: Params;
+  route: Route;
   matchedRoute: Route;
   currentTitle: Title;
   setRoutes: (routes: Record<Route, Title | TitleGetter>) => void;
