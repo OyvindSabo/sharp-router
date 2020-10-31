@@ -87,7 +87,7 @@ const ComponentWithRouting = () => {
         route: <pre>{route}</pre>
       </div>
       <div>
-        matchedRoute: <pre>{route}</pre>
+        matchedRoute: <pre>{matchedRoute}</pre>
       </div>
       <div>
         matchedRoute: <pre>{JSON.stringify(params, null, 2)}</pre>
