@@ -61,10 +61,10 @@ class Router {
     this._setCurrentTitle(this._titleGetters[route](params));
     if (reconstructedHash === '#') {
       this._removeHash();
-      document.title = this.currentTitle;
     } else {
       history.replaceState(undefined, document.title, reconstructedHash);
     }
+    document.title = this.currentTitle;
   };
 
   setRoutes = (routes: Record<Route, Title | TitleGetter>) => {
