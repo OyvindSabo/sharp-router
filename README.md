@@ -16,9 +16,9 @@ npm install sharp-router
 ## Create your router
 
 ```javascript
-import Router from 'sharp-router';
+import createRouter from 'sharp-router';
 
-const router = new Router({
+const router = createRouter({
   '/': 'Home', // https://example.com
   '/login': 'Login', // https://example.com/#/login
   '/register': 'Register', // https://example.com/#/register
@@ -69,7 +69,7 @@ router.removeChangeListener(changeListener);
 
 ```javascript
 import React from 'react';
-import Router, { useRouter } from 'sharp-router';
+import createRouter, { useRouter } from 'sharp-router';
 
 const router = new Router({
   '/': 'Home',
