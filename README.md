@@ -24,8 +24,10 @@ import createRouter from 'sharp-router';
 
 const router = createRouter({
   '/': 'Build amazing things',
-  '/package/<packageName>': ({ packageName }) => packageName,
-  '/package/<packageName>/v/<major:int>/<minor:int>/<patch:int>': ({ packageName }) => packageName,
+  '/package/<packageName:string>': ({ packageName }) => packageName,
+  '/package/<packageName:string>/v/<major:int>/<minor:int>/<patch:int>': ({
+    packageName,
+  }) => packageName,
 });
 ```
 
@@ -52,7 +54,7 @@ location.hash = '#/package/sharp-router/v/4/1/3';
 
 ```javascript
 console.log(router.route);        // '/package/sharp-router/v/4/1/3'
-console.log(router.matchedRoute); // '/package/<packageName>/v/<major:int>/<minor:int>/<patch:int>'
+console.log(router.matchedRoute); // '/package/<packageName:string>/v/<major:int>/<minor:int>/<patch:int>'
 console.log(router.params);       // { packageName: 'sharp-router', major: 4, minor: 1, patch: 3 }
 ```
 
@@ -61,7 +63,7 @@ console.log(router.params);       // { packageName: 'sharp-router', major: 4, mi
 ```javascript
 const changeListener = ({ route, matchedRoute, params }) => {
   console.log(route);        // '/package/sharp-router/v/4/1/3'
-  console.log(matchedRoute); // '/package/<packageName>/v/<major:int>/<minor:int>/<patch:int>'
+  console.log(matchedRoute); // '/package/<packageName:string>/v/<major:int>/<minor:int>/<patch:int>'
   console.log(params);       // { packageName: 'sharp-router', major: 4, minor: 1, patch: 3 }
 };
 
@@ -77,8 +79,10 @@ import createRouter, { useRouter } from 'sharp-router';
 
 const router = createRouter({
   '/': 'Build amazing things',
-  '/package/<packageName>': ({ packageName }) => packageName,
-  '/package/<packageName>/v/<major:int>/<minor:int>/<patch:int>': ({ packageName }) => packageName,
+  '/package/<packageName:string>': ({ packageName }) => packageName,
+  '/package/<packageName:string>/v/<major:int>/<minor:int>/<patch:int>': ({
+    packageName,
+  }) => packageName,
 });
 
 const ComponentWithRouting = () => {
