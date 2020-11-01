@@ -17,51 +17,52 @@ npm install sharp-router
 
 ### Create your router
 
+The following example shows how to create a router for an npm-like package manager website
+
 ```javascript
 import createRouter from 'sharp-router';
 
 const router = createRouter({
-  '/': 'Home of shopping',
-  '/<category:string>/<page:int>': ({ category }) => `Shop ${category}`,
-  '/<category:string>/<productName:string>': ({ productName }) => productName,
-  '/cart': 'Shopping cart',
+  '/': 'Build amazing things',
+  '/package/<packageName>': ({ packageName }) => packageName,
+  '/package/<packageName>/v/<major:int>/<minor:int>/<patch:int>': ({ packageName }) => packageName,
 });
 ```
 
 ### Navigation
 
-The following examples show different ways to navigate to example.com/#/animals/1
+The following examples show different ways to navigate to example.com/#/package/sharp-router/v/4/1/3
 
 ```javascript
 // With Sharp Router
-router.navigateTo('/animals/1');
+router.navigateTo('/package/sharp-router/v/4/1/3');
 ```
 
 ```javascript
 // With vanilla JavaScript
-location.hash = '#/animals/1';
+location.hash = '#/package/sharp-router/v/4/1/3';
 ```
 
 ```html
 <!-- With HTML -->
-<a href="#/animals/1">Shop animals</a>
+<a href="#/package/sharp-router/v/4/1/3">sharp-router</a>
 ```
 
 ### Access current route, matched route pattern and extracted parameters
 
 ```javascript
-console.log(router.route);        // '/animals/1'
-console.log(router.matchedRoute); // '/<category:string>/<page:int>'
-console.log(router.params);       // { category: 'animals', page: 1 }
+console.log(router.route);        // '/package/sharp-router/v/4/1/3'
+console.log(router.matchedRoute); // '/package/<packageName>/v/<major:int>/<minor:int>/<patch:int>'
+console.log(router.params);       // { packageName: 'sharp-router', major: 4, minor: 1, patch: 3 }
 ```
 
 ### Listen to route changes
 
 ```javascript
 const changeListener = ({ route, matchedRoute, params }) => {
-  console.log(route);        // '/animals/1'
-  console.log(matchedRoute); // '/<category:string>/<page:int>'
-  console.log(params);       // { category: 'animals', page: 1 }
+  console.log(route);        // '/package/sharp-router/v/4/1/3'
+  console.log(matchedRoute); // '/package/<packageName>/v/<major:int>/<minor:int>/<patch:int>'
+  console.log(params);       // { packageName: 'sharp-router', major: 4, minor: 1, patch: 3 }
 };
 
 router.addChangeListener(changeListener);
@@ -75,10 +76,9 @@ import React from 'react';
 import createRouter, { useRouter } from 'sharp-router';
 
 const router = createRouter({
-  '/': 'Home of shopping',
-  '/<category:string>/<page:int>': ({ category }) => `Shop ${category}`,
-  '/<category:string>/<productName:string>': ({ productName }) => productName,
-  '/cart': 'Shopping cart',
+  '/': 'Build amazing things',
+  '/package/<packageName>': ({ packageName }) => packageName,
+  '/package/<packageName>/v/<major:int>/<minor:int>/<patch:int>': ({ packageName }) => packageName,
 });
 
 const ComponentWithRouting = () => {
