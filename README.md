@@ -1,82 +1,84 @@
-# Sharp Router
+![SHARP](https://user-images.githubusercontent.com/25663729/97790020-76c41000-1bc5-11eb-8bb2-84c3a97ab24a.png)
 
-An easy to use hash-based routing library for single-page JavaScript applications
+<div align=center><b>An easy to use hash-based routing library for single-page JavaScript applications</b></div>
+
+### Key Features
 
 - Routing is handled 100% in the browser - no server configuration required!
 - Enables routing within a single page of a multi-page application - perfect for GitHub pages!
 - Ships with TypeScript type declarations!
 - Easy to use with React!
 
-## Installation
+### Installation
 
 ```bash
 npm install sharp-router
 ```
 
-## Create your router
+### Create your router
 
 ```javascript
 import createRouter from 'sharp-router';
 
 const router = createRouter({
-  '/': 'Home', // https://example.com
-  '/login': 'Login', // https://example.com/#/login
-  '/register': 'Register', // https://example.com/#/register
-  '/users/<username:string>': ({ username }) => `Profile of ${username}`, // https://example.com/#/users/bob
+  '/': 'Home of shopping',
+  '/<category:string>/<page:int>': ({ category }) => `Shop ${category}`,
+  '/<category:string>/<productName:string>': ({ productName }) => productName,
+  '/cart': 'Shopping cart',
 });
 ```
 
-## Navigation
+### Navigation
 
-The following examples show different ways to navigate to https://example.com/#/users/bob
+The following examples show different ways to navigate to example.com/#/animals/1
 
 ```javascript
 // With Sharp Router
-router.navigateTo('/users/bob');
+router.navigateTo('/animals/1');
 ```
 
 ```javascript
 // With vanilla JavaScript
-location.hash = '#/users/bob';
+location.hash = '#/animals/1';
 ```
 
 ```html
 <!-- With HTML -->
-<a href="#/users/bob">Bob's profile</a>
+<a href="#/animals/1">Shop animals</a>
 ```
 
-## Access the matched route, as well as its parameters
+### Access current route, matched route pattern and extracted parameters
 
 ```javascript
-console.log(router.route); // '/users/bob'
-console.log(router.matchedRoute); // '/users/<username:string>'
-console.log(router.params); // { username: 'bob' }
+console.log(router.route);        // '/animals/1'
+console.log(router.matchedRoute); // '/<category:string>/<page:int>'
+console.log(router.params);       // { category: 'animals', page: 1 }
 ```
 
-## Listen to route changes
+### Listen to route changes
 
 ```javascript
 const changeListener = ({ route, matchedRoute, params }) => {
-  console.log(route); // '/users/bob'
-  console.log(matchedRoute); // '/users/<username:string>'
-  console.log(params); // { username: 'bob' }
+  console.log(route);        // '/animals/1'
+  console.log(matchedRoute); // '/<category:string>/<page:int>'
+  console.log(params);       // { category: 'animals', page: 1 }
 };
 
 router.addChangeListener(changeListener);
 router.removeChangeListener(changeListener);
 ```
 
-## Using Sharp Router with React
+### Using Sharp Router with React
 
 ```javascript
 import React from 'react';
 import createRouter, { useRouter } from 'sharp-router';
 
 const router = createRouter({
-  '/': 'Home',
-  '/login': 'Login',
-  '/register': 'Register',
-  '/users/<username:string>': ({ username }) => `Profile of ${username}`,
+  '/': 'Home of shopping',
+  '/<category:string>/<page:int>': ({ category }) => `Shop ${category}`,
+  '/<category:string>/<productName:string>': ({ productName }) => productName,
+  '/cart': 'Shopping cart',
 });
 
 const ComponentWithRouting = () => {
@@ -97,7 +99,7 @@ const ComponentWithRouting = () => {
 };
 ```
 
-## Publishing a new version
+### Publishing a new version
 
 Check that linting, formatting, build and tests pass
 
