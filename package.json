@@ -1,6 +1,6 @@
 {
   "name": "sharp-router",
-  "version": "4.1.4",
+  "version": "4.1.5",
   "description": "An easy to use hash-based client-side router",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
